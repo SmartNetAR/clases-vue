@@ -20,8 +20,7 @@ export default {
   },
   methods: {
     search() {
-      console.log('buscando')
-      // this.$emit('search-movie-title', this.titleSearch)
+      this.$emit('search-movie-title', this.titleSearch)
     }
   }
 }
