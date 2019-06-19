@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Vue app</title>
+</head>
+
+<body>
+  <div id='app'>
+    <h1>{{titulo}}</h1>
+    <ul>
+      <!-- <div v-for="alumno in alumnos"> -->
+        <li v-for="alumno in alumnos">
+          {{alumno.nombre}} tiene 
+          <input type="number" v-model="alumno.edad">
+          <span :title="alumno.mayor">¿es mayor?</span>
+        </li>
+        <!-- <span v-show="alumno.edad < 18">es menor</span> -->
+      <!-- </div> -->
+    </ul>
+    <input v-model="titulo" type="text">
+    <br>
+    <input type="text" v-model="titulo">
+    <br>
+    <input list="alumnos">
+    <datalist id="alumnos">
+      <option v-for="alumno in alumnos"
+        v-bind:value="alumno.nombre">
+      </option>
+    </datalist>
+  </div>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="01.js">
+  </script>
+</body>
+
+</html>

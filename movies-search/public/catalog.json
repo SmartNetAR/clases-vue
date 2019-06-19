@@ -1,0 +1,6 @@
+[
+  { "id": 1, "name": "Dia de la independencia", "year": 2000, "age": 16 },
+  { "id": 2, "name": "Toy Story", "year": 1995, "age": 0 },
+  { "id": 3, "name": "El padrino", "year": 2000, "age": 13 },
+  { "id": 4, "name": "El exorcista", "year": 1973, "age": 18 }
+]
