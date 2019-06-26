@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Navbar v-on:search-movie-title="searchMovie"></Navbar>
+    <Navbar :title="titulo" v-on:search-movie-title="searchMovie"></Navbar>
     <Content v-bind:movie-title="movieTitleToSearch"></Content>
     <!-- <HelloWorld :msg="titulo"/> -->
   </div>
@@ -20,7 +20,7 @@ export default {
   },
   data() {
     return {
-      titulo: 'proyecto vue cli',
+      titulo: 'my movies app',
       movieTitleToSearch: ''
     }
   },
