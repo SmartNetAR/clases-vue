@@ -13,9 +13,9 @@
       <tbody>
         <tr v-for="movie in movies" :key="movie.id">
           <th scope="row">{{movie.id}}</th>
-          <td>{{movie.name}}</td>
-          <td>{{movie.year}}</td>
-          <td>{{movie.age}}</td>
+          <th>{{movie.Title}}</th>
+          <th>{{movie.Year}}</th>
+          <th>{{movie.Age}}</th>
         </tr>
       </tbody>
     </table>
@@ -31,12 +31,16 @@ export default {
     }
   },
   mounted() {
-    this.loadCatalog()
+    this.loadCatalog().catch( e => alert(e.message))
   },
   methods: {
     loadCatalog: async function() {
-      const data = await fetch('http://localhost:8080/catalog.json')
-      this.movies = await data.json()
+      try {
+        const data = await fetch('http://localhost:8080/catalog.json')
+        this.movies = await data.json()
+      } catch (error) {
+        throw error
+      }
     }
   }
 }
