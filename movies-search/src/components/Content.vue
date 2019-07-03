@@ -31,16 +31,31 @@ export default {
     }
   },
   mounted() {
-    this.loadCatalog().catch( e => alert(e.message))
+    if ( localStorage.getItem( 'movies' ) ) {
+      try {
+        this.movies = JSON.parse( localStorage.getItem( 'movies' ) )
+        // eslint-disable-next-line
+        console.log( 'movies obtenidas de localStorage' )
+      } catch( error ) {
+        localStorage.removeItem( 'movies' )
+        this.loadCatalog().catch( e => alert( e.message ) )
+      }
+    } else {
+      this.loadCatalog().then( () => this.saveMovies() ).catch( e => alert( e.message ) )
+    }
   },
   methods: {
     loadCatalog: async function() {
       try {
-        const data = await fetch('http://localhost:8080/catalog.json')
+        const data = await fetch( 'http://localhost:8080/catalog.json' )
         this.movies = await data.json()
-      } catch (error) {
+      } catch ( error ) {
         throw error
       }
+    },
+    saveMovies() {
+      const parsed = JSON.stringify( this.movies )
+      localStorage.setItem( 'movies', parsed )
     }
   }
 }
