@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <h1>{{movieTitle}}</h1>
+    <h1>Resultados de {{movieTitle}}</h1>
     <table class="table table-striped">
       <thead>
         <tr>
@@ -11,7 +11,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="movie in movies" :key="movie.id">
+        <tr v-for="movie in filteredMovies" :key="movie.id">
           <th scope="row">{{movie.id}}</th>
           <th>{{movie.Title}}</th>
           <th>{{movie.Year}}</th>
@@ -56,6 +56,21 @@ export default {
     saveMovies() {
       const parsed = JSON.stringify( this.movies )
       localStorage.setItem( 'movies', parsed )
+    }
+  },
+  computed: {
+    filteredMovies() {
+      // return this.movies.filter( movie => movie.Title == this.movieTitle)
+
+      /*    
+      The indexOf() method returns the position of the first occurrence of a specified value in a string.
+      This method returns -1 if the value to search for never occurs.
+      Note: The indexOf() method is case sensitive. 
+      https://www.w3schools.com/jsref/jsref_indexof.asp
+      */
+      return this.movies.filter( (movie) =>
+        movie.Title.toLowerCase().indexOf(this.movieTitle.toLowerCase()) > -1
+      )
     }
   }
 }
