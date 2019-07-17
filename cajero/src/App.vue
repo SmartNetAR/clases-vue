@@ -1,16 +1,35 @@
 <template>
   <div>
-    <cajero/>
+    <div v-if="auth === false">
+      <login @enter="checkLogin"/>
+    </div>
+    <div v-else>
+      <cajero/>
+    </div>
   </div>
 </template>
 
 <script>
 import Cajero from './components/Cajero.vue'
+import Login from './components/Login.vue'
 
 export default {
   name: 'app',
   components: {
-    Cajero
+    Cajero,
+    Login
+  },
+  data() {
+    return {
+      auth: false,
+    }
+  },
+  methods: {
+    checkLogin(user) {
+      // eslint-disable-next-line
+      console.log(user.name)
+      this.auth = true
+    }
   }
 }
 </script>
