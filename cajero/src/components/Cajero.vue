@@ -35,22 +35,7 @@ export default {
       auth: false
     }
   },
-  mounted() {
-    this.validar()
-  },
   methods: {
-    validar() {
-      let txt = prompt("Ingrese la clave:");
-      if (txt == null || txt == "") {
-        // "User cancelled the prompt."
-        this.validar()
-      } else{
-        let pass = parseInt(txt)
-        if (parseInt(pass) === 1122) {
-          this.auth = true
-        }
-      }
-    }
   }
 };
 </script>

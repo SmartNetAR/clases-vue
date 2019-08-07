@@ -1,0 +1,5 @@
+[
+  {"nombre": "juan", "contraseña": "2233", "saldo": 9000, "limite": 2000 },
+  {"nombre": "pedro", "contraseña": "1234", "saldo": 12000, "limite": 2000 },
+  {"nombre": "maría", "contraseña": "4321", "saldo": 2000, "limite": 2500 }
+]

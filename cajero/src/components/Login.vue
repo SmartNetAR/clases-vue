@@ -10,6 +10,7 @@
     <div class="white-container">
       <div class="menu-container">
         <h1 class="tu-cuenta">Login</h1>
+        <input type="password" v-model="pass" placeholder="contraseña">
         <button class="links" @click="enter()">Entrar</button>
       </div>
     </div>
@@ -21,15 +22,12 @@ export default {
   name: 'Login',
   data() {
     return {
-      user: {
-        name: 'nombre usuario', 
-        pass: 'contraseña',
-      },
+      pass: '',
     }
   },
   methods: {
     enter() {
-      this.$emit('enter', this.user)
+      this.$emit('enter',  this.pass )
     }
   }
 }
