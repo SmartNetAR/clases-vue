@@ -4,7 +4,7 @@
       <login @enter="validar"/>
     </div>
     <div v-else>
-      <cajero/>
+      <cajero :usuarioActivo = usuarioValidado />
     </div>
   </div>
 </template>
@@ -23,7 +23,8 @@ export default {
   data() {
     return {
       auth: false,
-      usuarios: []
+      usuarios: [],
+      usuarioValidado: {}
     }
   },
   mounted() {
@@ -36,8 +37,16 @@ export default {
     },
     validar( pass ) {
       const cantidadUsuarios = this.usuarios.length
-      for( let i = 0; i < cantidadUsuarios ; i++) {
-        console.log( this.usuarios[i].contraseña  )
+
+      for( let i = 0; ( i < cantidadUsuarios && this.auth == false ) ; i++) {
+
+        if ( this.usuarios[i].contraseña == pass ) {
+
+          this.usuarioValidado = this.usuarios[i] ;
+          this.auth = true ;
+
+        }
+
       }
       
       /* 
