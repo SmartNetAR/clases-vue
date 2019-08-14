@@ -44,6 +44,10 @@ export default {
       const data = await fetch( './servicios.json' )
       this.servicios = await data.json()
     },
+    cambiarLimiteDeExtraccion: function() {
+      const nuevoLimite = parseInt( prompt( "Ingrese el nuevo límite", this.usuarioActivo.limite ) )
+      this.usuarioActivo.limite = nuevoLimite ;
+    }
   }
 };
 </script>
