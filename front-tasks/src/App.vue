@@ -1,17 +1,35 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <TasksList msg="Welcome to Your Vue.js App"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TasksList from './components/TasksList.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    TasksList
+  },
+  data() {
+    return {
+      tasks: [],
+    }
+  },
+  methods: {
+    getTasks: async function() {
+      try {
+        const data = await fetch('http://localhost:8000/api/tasks');
+        this.tasks = await data.json();
+      } catch (error) {
+        throw error;
+      }
+
+    }
+  },
+  mounted() {
+    this.getTasks();
   }
 }
 </script>
