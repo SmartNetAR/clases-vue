@@ -1,27 +1,30 @@
 <template>
-  <div id="app">
-    <TasksList msg="Welcome to Your Vue.js App"/>
+  <div>
+    <TasksList :tasks="tasksList"/>
+    <NewTask/>
   </div>
 </template>
 
 <script>
 import TasksList from './components/TasksList.vue'
+import NewTask from './components/NewTask.vue'
 
 export default {
   name: 'app',
   components: {
-    TasksList
+    TasksList,
+    NewTask
   },
   data() {
     return {
-      tasks: [],
+      tasksList: [],
     }
   },
   methods: {
     getTasks: async function() {
       try {
         const data = await fetch('http://localhost:8000/api/tasks');
-        this.tasks = await data.json();
+        this.tasksList = await data.json();
       } catch (error) {
         throw error;
       }
