@@ -38,6 +38,18 @@ export default new Router({
       beforeEnter: ifNotAuthenticated,
     },
     {
+      path: '/events',
+      name: 'events',
+      component: () => import('./views/Events'),
+      beforeEnter: ifAuthenticated,
+    },
+    // {
+    //   path: '/signin',
+    //   name: 'signIn',
+    //   component: () => import('../views/SignIn'),
+    //   beforeEnter: ifNotAuthenticated,
+    // },
+    {
         path: '/signin',
         name: 'signIn',
         component: () => import('./views/SignIn'),
