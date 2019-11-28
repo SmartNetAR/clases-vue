@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import apiCall from '@/utils/api'
 export default {
     name: 'Eventslist',
     data() {
@@ -34,19 +35,19 @@ export default {
         }
     },
 mounted() {
-    this.getEvents()     
+    this.getAllEvents()     
 },
 methods: {
-    getEvents: async function() {
-    try {
-        const data = await fetch('http://127.0.0.1:8000/api/events/')
-        console.log(data)
-        this.events = await data.json()
-        console.log(this.events)
-        }catch (error) {
-        console.error(error)
-        }
+    getAllEvents: async ( ) => {
+      try {
+        const response = await apiCall({url: 'events'})
+        console.log(response)
+        this.events = await response
+        // commit( TEAM_SUCCESS, response.teams )
+      } catch (error) {
+        // commit ( TEAM_ERROR )
+      }
     }
-}   
+  }
 }
 </script>
