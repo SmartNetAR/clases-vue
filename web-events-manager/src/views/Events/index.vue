@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row">
-      <div class="col-sm-6" v-for="item in events.events" :key="item.place">
+      <div class="col-sm-6" v-for="item in events.events" :key="item.id">
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">{{item.name}}</h5>
@@ -27,21 +27,12 @@ export default {
     this.getAllEvents();
   },
   methods: {
-    getAllEvents: async function() {
-      const baseUrl = "http://localhost:8000/api/events";
-      const settings = {
-        method: "get",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("user-token")
-        }
-      };
+    getAllEvents: async function () {
       try {
-        const data = await fetch(baseUrl, settings);
-        this.events = await data.json();
+        const response = await apiCall({url: 'events'})
+        this.events = await response
       } catch (error) {
-        throw error;
+        throw error
       }
     },
     watchEvent(id){
