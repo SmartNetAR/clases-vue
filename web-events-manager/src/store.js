@@ -27,7 +27,6 @@ export default new Vuex.Store({
     },
     [AUTH_SUCCESS]: (state, resp) => {
       state.status = 'success'
-      console.log(resp.success.token)
       state.token = resp.success.token
       state.hasLoadedOnce = true
     },
@@ -64,7 +63,7 @@ export default new Vuex.Store({
       commit(ACCOUNT_CREATE)
       try {
         const response = await apiCall({ url: 'register', method: 'POST', data: user })
-        localStorage.setItem('user-token', response.token)
+        localStorage.setItem('user-token', response.success.token)
         commit(AUTH_SUCCESS, response)
         dispatch(USER_REQUEST)
       } catch (error) {
@@ -81,7 +80,7 @@ export default new Vuex.Store({
     [USER_REQUEST]: async ({ commit, dispatch }) => {
       commit(USER_REQUEST)
       try {
-        const response = await apiCall({ url: 'profile' })
+        const response = await apiCall({ url: 'profile' }) // TODO crear endpoint profile
         commit(USER_SUCCESS, response.user)
       } catch (error) {
         commit(USER_ERROR)
