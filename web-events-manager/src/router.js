@@ -26,11 +26,9 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
-    {
-      path: '/',
+    { path: '/',
       name: 'home',
-      component: Home
-    },
+      component: Home },
     {
       path: '/login',
       name: 'login',
@@ -41,6 +39,12 @@ export default new Router({
       path: '/events',
       name: 'events',
       component: () => import('./views/Events'),
+      beforeEnter: ifAuthenticated,
+    },
+    {
+      path: '/events/:id',
+      name: 'event',
+      component: () => import('./views/Events/Event'),
       beforeEnter: ifAuthenticated,
     },
     // {

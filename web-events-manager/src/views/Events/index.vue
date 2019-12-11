@@ -1,53 +1,52 @@
 <template>
-    <div>
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Place</th>
-      <th scope="col">Name</th>
-      <th scope="col">Description</th>
-      <th scope="col">Price</th>
-      <th scope="col">Capacity</th>
-    </tr>
-  </thead>
-  <tbody>
-      
-    <tr v-for="item in events.events" :key="item.place">
-      <th scope="row">{{evemts.place}}</th>
-      <td>{{events.name}}</td>
-      <td>{{events.description}}</td>
-      <td>{{events.price}}</td>
-      <td>{{events.capacity}}</td>
-    </tr>
-  </tbody>
-</table>
-
+  <div>
+    <div class="row">
+      <div class="col-sm-6" v-for="item in events.events" :key="item.place">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{item.name}}</h5>
+            <p class="card-text">{{item.place}}</p>
+            <button @click='watchEvent(item.id)' class="btn btn-primary">Ver evento</button>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
-import apiCall from '@/utils/api'
+import apiCall from "@/utils/api";
 export default {
-    name: 'Eventslist',
-    data() {
-        return{
-            events:[],
+  name: "Eventslist",
+  data() {
+    return {
+      events: []
+    };
+  },
+  mounted() {
+    this.getAllEvents();
+  },
+  methods: {
+    getAllEvents: async function() {
+      const baseUrl = "http://localhost:8000/api/events";
+      const settings = {
+        method: "get",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("user-token")
         }
-    },
-mounted() {
-    this.getAllEvents()     
-},
-methods: {
-    getAllEvents: async ( ) => {
+      };
       try {
-        const response = await apiCall({url: 'events'})
-        console.log(response)
-        this.events = await response
-        // commit( TEAM_SUCCESS, response.teams )
+        const data = await fetch(baseUrl, settings);
+        this.events = await data.json();
       } catch (error) {
-        // commit ( TEAM_ERROR )
+        throw error;
       }
+    },
+    watchEvent(id){
+      this.$router.push('/events/'+ id)
     }
   }
-}
+};
 </script>
