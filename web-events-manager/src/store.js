@@ -9,6 +9,8 @@ export const AUTH_SUCCESS = 'AUTH_SUCCESS'
 export const AUTH_ERROR = 'AUTH_ERROR'
 export const AUTH_LOGOUT = 'AUTH_LOGOUT'
 
+export const ACCOUNT_CREATE = 'ACCOUNT_CREATE'
+
 export const USER_REQUEST = 'USER_REQUEST'
 export const USER_SUCCESS = 'USER_SUCCESS'
 export const USER_ERROR = 'USER_ERROR'
@@ -35,10 +37,13 @@ export default new Vuex.Store({
     },
     [AUTH_LOGOUT]: (state) => {
       state.token = ''
-    }
+    },
+    [ACCOUNT_CREATE]: () => {
+      // state.status = 'loading'
+    },
   },
   actions: {
-    [AUTH_REQUEST]: async ({commit, dispatch}, user) => {
+    [AUTH_REQUEST]: async ({ commit, dispatch }, user) => {
       commit(AUTH_REQUEST)
       try {
         const response = await apiCall({ url: 'login', method: 'POST', data: user })
@@ -50,21 +55,38 @@ export default new Vuex.Store({
         localStorage.removeItem('user-token')
         throw Error(error.message);
       }
-  },
-  [AUTH_LOGOUT]: ({commit}) => {
+    },
+    [AUTH_LOGOUT]: ({ commit }) => {
       commit(AUTH_LOGOUT)
       localStorage.removeItem('user-token')
-    }
-  },
+    },
+    [ACCOUNT_CREATE]: async ({ commit, dispatch }, user) => {
+      commit(ACCOUNT_CREATE)
+      try {
+        const response = await apiCall({ url: 'register', method: 'POST', data: user })
+        localStorage.setItem('user-token', response.token)
+        commit(AUTH_SUCCESS, response)
+        dispatch(USER_REQUEST)
+      } catch (error) {
+        commit(AUTH_ERROR, error)
+        localStorage.removeItem('user-token')
+        throw Error(error.message);
+      }
+    },
+    [AUTH_LOGOUT]: ({ commit }) => {
+      commit(AUTH_LOGOUT)
+      localStorage.removeItem('user-token')
+    },
 
-  [USER_REQUEST]: async ({commit, dispatch}) => {
-    commit(USER_REQUEST)
-    try {
-      const response = await apiCall({url: 'profile'})
-      commit(USER_SUCCESS, response.user)
-    } catch (error) {
-      commit(USER_ERROR)
-      dispatch(AUTH_LOGOUT)   
-    }
-  },
+    [USER_REQUEST]: async ({ commit, dispatch }) => {
+      commit(USER_REQUEST)
+      try {
+        const response = await apiCall({ url: 'profile' })
+        commit(USER_SUCCESS, response.user)
+      } catch (error) {
+        commit(USER_ERROR)
+        dispatch(AUTH_LOGOUT)
+      }
+    },
+  }
 })

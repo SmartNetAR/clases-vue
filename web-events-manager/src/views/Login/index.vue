@@ -9,7 +9,7 @@
         <input class="form-control" required v-model="password" type="password" placeholder="Password"/>        
       </div>
       <button class="btn btn-primary" type="submit">Login</button>
-      Are you new to Project Manager <router-link :to="{ name: 'signIn'}">Create Account</router-link>
+      Are you new in Events Manager <router-link :to="{ name: 'signIn'}">Create Account</router-link>
     </form>
   </div>
 </template>
